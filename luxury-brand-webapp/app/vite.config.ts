@@ -1,15 +1,23 @@
-import devServer from "@hono/vite-dev-server"
 import path from "path"
 const __dirname = import.meta.dirname
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
-import { inspectAttr } from 'plugin-inspect-react-code'
+
+const isDev = process.env.NODE_ENV !== 'production'
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    devServer({ entry: "api/boot.ts", exclude: [/^\/(?!api\/).*$/] }),
-    inspectAttr(), react()],
+export default defineConfig(async () => {
+  const plugins = [react()]
+
+  if (isDev) {
+    const { default: devServer } = await import('@hono/vite-dev-server')
+    const { inspectAttr } = await import('plugin-inspect-react-code')
+    plugins.unshift(devServer({ entry: 'api/boot.ts', exclude: [/^\/(?!api\/).*$/] }))
+    plugins.push(inspectAttr())
+  }
+
+  return {
+  plugins,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -27,4 +35,5 @@ export default defineConfig({
     port: 3000,
     allowedHosts: true,
   },
+  }
 });

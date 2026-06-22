@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd app && npm install && npx vite build",
+  "outputDirectory": "app/dist/public",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
