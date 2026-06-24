@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 0 0% 0%;
+    --radius: 0px;
+
+    /* Luxury gold accent */
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --gold-dark: #A8843F;
+    --off-white: #F5F2EC;
+    --serif: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background-color: var(--gold);
+    color: #000000;
+  }
+
+  /* Custom luxury scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--off-white);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+    transition: background 0.2s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+}
+
+/* Grain texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 9990;
+  animation: grain-drift 12s steps(10, end) infinite;
+}
+
+@keyframes grain-drift {
+  0%   { transform: translate(0,    0) }
+  10%  { transform: translate(-5%, -10%) }
+  20%  { transform: translate(-15%,  5%) }
+  30%  { transform: translate(7%,  -15%) }
+  40%  { transform: translate(-5%,  20%) }
+  50%  { transform: translate(-10%, 10%) }
+  60%  { transform: translate(10%,   0%) }
+  70%  { transform: translate(0%,   12%) }
+  80%  { transform: translate(3%,   25%) }
+  90%  { transform: translate(-8%,  10%) }
+  100% { transform: translate(0,    0) }
+}
+
+/* Gold serif utility */
+.display-serif {
+  font-family: var(--serif);
+}
+
+/* Luxury underline hover effect */
+.luxury-link {
+  position: relative;
+}
+.luxury-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--gold);
+  transition: width 0.3s ease;
+}
+.luxury-link:hover::after {
+  width: 100%;
+}

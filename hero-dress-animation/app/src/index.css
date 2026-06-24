@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 0 0% 0%;
+    --radius: 0px;
+
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --off-white: #F5F2EC;
+    --dark: #0b0b0b;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--sans);
+    background-color: #ffffff;
+    color: #000000;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background-color: var(--gold);
+    color: #000000;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--off-white); }
+  ::-webkit-scrollbar-thumb { background: #1a1a1a; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+}
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 9990;
+  animation: grain-drift 14s steps(10, end) infinite;
+}
+
+@keyframes grain-drift {
+  0%   { transform: translate(0, 0) }
+  10%  { transform: translate(-5%, -10%) }
+  20%  { transform: translate(-15%, 5%) }
+  30%  { transform: translate(7%, -15%) }
+  40%  { transform: translate(-5%, 20%) }
+  50%  { transform: translate(-10%, 10%) }
+  60%  { transform: translate(10%, 0%) }
+  70%  { transform: translate(0%, 12%) }
+  80%  { transform: translate(3%, 25%) }
+  90%  { transform: translate(-8%, 10%) }
+  100% { transform: translate(0, 0) }
+}
+
+/* Hero fabric animation system */
+.hero-section {
+  --fabric-speed: 12s;
+  --fabric-intensity: 3px;
+  --fabric-direction: 1;
+}
+
+@keyframes fabric-ripple {
+  0%   { transform: translateX(0) translateY(0) skewX(0deg) scaleX(1); opacity: 0.88; }
+  12%  { transform: translateX(calc(var(--fabric-intensity) * var(--fabric-direction) * 0.25)) translateY(-0.8px) skewX(calc(0.25deg * var(--fabric-direction))); opacity: 0.92; }
+  28%  { transform: translateX(calc(var(--fabric-intensity) * var(--fabric-direction) * 0.65)) translateY(1.5px) skewX(calc(0.55deg * var(--fabric-direction))) scaleX(1.0015); opacity: 0.96; }
+  50%  { transform: translateX(calc(var(--fabric-intensity) * var(--fabric-direction))) translateY(-2px) skewX(calc(0.85deg * var(--fabric-direction))) scaleX(1.003); opacity: 0.99; }
+  68%  { transform: translateX(calc(var(--fabric-intensity) * var(--fabric-direction) * 0.7)) translateY(1px) skewX(calc(0.6deg * var(--fabric-direction))) scaleX(1.002); opacity: 0.95; }
+  84%  { transform: translateX(calc(var(--fabric-intensity) * var(--fabric-direction) * 0.2)) translateY(-0.5px) skewX(calc(0.18deg * var(--fabric-direction))); opacity: 0.90; }
+  100% { transform: translateX(0) translateY(0) skewX(0deg) scaleX(1); opacity: 0.88; }
+}
+
+@keyframes fabric-shimmer {
+  0%   { opacity: 0;    transform: translate(-18%, 12%) rotate(-8deg) scaleX(0.8); }
+  15%  { opacity: 0;    transform: translate(-12%, 6%)  rotate(-6deg) scaleX(0.9); }
+  35%  { opacity: 0.55; transform: translate(-2%,  0%)  rotate(-3deg) scaleX(1); }
+  55%  { opacity: 0.72; transform: translate(8%,  -6%)  rotate(0deg)  scaleX(1); }
+  75%  { opacity: 0.3;  transform: translate(16%, -12%) rotate(4deg)  scaleX(0.95); }
+  90%  { opacity: 0;    transform: translate(22%, -16%) rotate(6deg)  scaleX(0.88); }
+  100% { opacity: 0;    transform: translate(24%, -18%) rotate(8deg)  scaleX(0.8); }
+}
+
+@keyframes fabric-breathe {
+  0%, 100% { transform: scale(1.000); }
+  35%       { transform: scale(1.0015); }
+  65%       { transform: scale(1.002); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fabric-overlay {
+    animation: fabric-ripple var(--fabric-speed) cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    will-change: transform, opacity;
+  }
+
+  .fabric-shimmer-layer {
+    animation:
+      fabric-shimmer calc(var(--fabric-speed) * 0.72) ease-in-out infinite,
+      fabric-breathe calc(var(--fabric-speed) * 1.1) ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fabric-overlay,
+  .fabric-shimmer-layer {
+    display: none;
+  }
+}
